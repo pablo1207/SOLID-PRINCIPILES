@@ -1,0 +1,6 @@
+Código	Clave	Description			Cant.	Precio	Importe	IVA	IEPS
+AAA0045	T1 	cacahuates japoneses 150gr 	1	15.00	15.00	2.4000	4.500
+AAA0046	T3 	cacahuates japoneses 150gr 	2	15.00	30.00	4.8000	9.000
+AAA0047	A1 	cacahuates japoneses 150gr 	4	15.00	60.00	9.6000	0
+AAA0048	A4 	cacahuates japoneses 150gr 	5	15.00	75.00	12.0000	0
+AAA0049	B0 	cacahuates japoneses 150gr 	1	15.00	15.00	2.4000	0
