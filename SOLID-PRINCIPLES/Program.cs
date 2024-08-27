@@ -1,4 +1,6 @@
 ﻿using SOLID_PRINCIPLES;
+using SOLID_PRINCIPLES.Implementations;
+using SOLID_PRINCIPLES.interfaces;
 using System.Text;
 
 class Program
@@ -6,26 +8,41 @@ class Program
 
     static void Main(string[] args)
     {
-        var productProcessor = new ProductProcessor(Directory.GetCurrentDirectory() + "\\reporte.txt");
-        MemoryStream stream = getMemoryStreamProducts();
-        productProcessor.ProcessProducts(stream);
+        ILogger logger = new Logger();
+        IProductDataProvider productDataProvider = new ProductDataProvider();
 
-        Console.WriteLine("El archivo se creo existosamente");
+        IProductValidator productValidator = new ProductValidator(logger);
+        IProductMapper productMapper = new ProductMapper();
+        IProductParse productParse = new ProductParse(productValidator, productMapper);
+
+        var path = Directory.GetCurrentDirectory() + "\\reporte.txt";
+        IProductStorage productStorage = new PrductStorage(path, logger);
+
+
+        var productProcesor = new ProductProcessor(productDataProvider, productParse, productStorage);
+
+        MemoryStream stream = GetMemoryStremProducts();
+        productProcesor.ProcessProducts(stream);
+
+        Console.WriteLine("El archivo se creó exitosamente.");
         Console.ReadLine();
 
     }
 
-    private static MemoryStream getMemoryStreamProducts()
+    private static MemoryStream GetMemoryStremProducts()
     {
-        string productString =
-            "AAA0045|T1 |cacahuates japoneses 150gr |1 |15.00  \n" +
-            "AAA0046|T3 |cacahuates japoneses 150gr |2 |15.00  \n" +
-            "AAA0047|A1 |cacahuates japoneses 150gr |4 |15.00  \n" +
-            "AAA0048|A4 |cacahuates japoneses 150gr |5 |15.00  \n" +
-            "AAA0049|B0 |cacahuates japoneses 150gr |1 |15.00  ";
+        string productsString = "AAA0045|T1  |cacahuates japoneses 150gr  |1 |15.00  \n" +
+                                "AAA0037|T3  |cerveza  minerva 355ml      |1 |30.00  \n" +
+                                "AAA0014|A1  |Jabon Ariel 800gr           |1 |32.80  \n" +
+                                "AAA0234|A4  |Papel Higienico petalo 12   |1 |60.00  \n" +
+                                "AAA0110|B0  |Pasta de dientes 150ml      |1 |43.50  \n" +
+                                "AAA0001|T2  |Coca cola 2.5 ltrs          |1 |25.00  \n" +
+                                "AAA0022|T1  |Sabritas naturales 100gr    |2 |20.00  \n" +
+                                "AAA0045|T2  |Sprite2.5 ltrs              |1 |23.00  ";
+
 
         // convert string to stream
-        byte[] byteArray = Encoding.ASCII.GetBytes(productString);
+        byte[] byteArray = Encoding.ASCII.GetBytes(productsString);
         MemoryStream stream = new MemoryStream(byteArray);
         return stream;
     }

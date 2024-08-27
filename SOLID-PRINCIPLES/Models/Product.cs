@@ -1,4 +1,4 @@
-﻿namespace SOLID_PRINCIPLES
+﻿namespace SOLID_PRINCIPLES.Models
 {
     public class Product
     {
